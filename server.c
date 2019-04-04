@@ -95,28 +95,31 @@ int check_client(fd_set *rfds, struct sockaddr_in *addr, int *clients)
                                 clients[i] = 0;
                         } else {
                                 str[retval] = '\0';
-                                if (strcmp(str, "PASV") == 0) {
+                                if (strcmp(str, "PASV") == 0)
                                         send(clients[i], "PASV command get\n", 17, 0);
-                                }
                         }
                 }
         }
         return (0);
 }
 
+struct sockaddr_in create_address(int port)
+{
+        struct sockaddr_in addr = {0};
+
+        addr.sin_family = AF_INET;
+        addr.sin_port = htons(port);
+        addr.sin_addr.s_addr = INADDR_ANY;
+        return (addr);
+}
+
 int main(int ac, char **av)
 {
         fd_set rfds;
         int clients[30] = {0};
-        struct sockaddr_in addr = {0};
-        int master_sock = 0;
-        char str[1000] = {0};
-        int addrlen = sizeof(addr);
+        struct sockaddr_in addr = create_address(atoi(av[1]));
+        int master_sock = create_socket(&addr, 5);
 
-        addr.sin_family = AF_INET;
-        addr.sin_port = htons(atoi(av[1]));
-        addr.sin_addr.s_addr = INADDR_ANY;
-        master_sock = create_socket(&addr, 5);
         if (master_sock == -1)
                 return (84);
         while (1) {
