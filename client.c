@@ -40,6 +40,11 @@ int main(int ac, char **av)
         }
         valread = read(sock, buffer, 1000);
         printf("Server said: %s", buffer);
+        // while (1) {
+                write(sock, "PASV", 5);
+                valread = read(sock, buffer, 1000);
+                printf("Server said: %s", buffer);
+        // }
         close(sock);
         return 0;
 }
