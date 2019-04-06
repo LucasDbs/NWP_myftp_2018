@@ -8,7 +8,8 @@
 NAME	=	myftp
 
 SRC	=	src/server.c		\
-		src/management.c
+		src/management.c	\
+		src/parsing.c
 
 OBJ	=	$(SRC:.c=.o)
 
