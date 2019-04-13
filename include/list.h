@@ -25,5 +25,6 @@ client_s *create_node(int port);
 int add_node(client_s *head, int port);
 int delete_node(client_s **head, client_s *to_delete);
 int destroy_list(client_s *head);
+int other_command(char *, client_s *);
 
 #endif

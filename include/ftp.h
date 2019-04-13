@@ -16,5 +16,7 @@ client_s *check_client(fd_set *, struct sockaddr_in *, client_s *);
 client_s *incoming_connection(int, struct sockaddr_in *, client_s *);
 int print_usage(void);
 int parsing(int, char **);
+int check_command(char *, client_s *);
+int clean_str(char *);
 
 #endif

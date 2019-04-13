@@ -11,6 +11,8 @@ SRC	=	src/server.c		\
 		src/management.c	\
 		src/parsing.c		\
 		src/linked_list.c	\
+		src/auth_command.c	\
+		src/other_command.c
 
 OBJ	=	$(SRC:.c=.o)
 

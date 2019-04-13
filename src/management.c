@@ -46,8 +46,8 @@ client_s *manage_client(client_s *head, client_s *client, struct sockaddr_in *ad
 		delete_node(&head, client);
 	} else {
 		str[retval] = '\0';
-		if (strcmp(str, "PASV") == 0)
-			write(client->port, "PASV command get\n", 17);
+		// clean_str(str);
+		check_command(str, client);
 	}
 	return (head);
 }
