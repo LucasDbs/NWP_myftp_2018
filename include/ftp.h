@@ -9,12 +9,13 @@
 #define FTP_H_
 
 #include <sys/select.h>
+#include "list.h"
 
-int manage_select(fd_set *, int, int *);
-int manage_client(int *, struct sockaddr_in *);
-int check_client(fd_set *, struct sockaddr_in *, int *);
-int incoming_connection(int, struct sockaddr_in *, int *);
-int print_usage();
+int manage_select(fd_set *, int, /*int **/ client_s *);
+client_s *manage_client(client_s *,/*int **/client_s *, struct sockaddr_in *);
+client_s *check_client(fd_set *, struct sockaddr_in *, /*int **/ client_s *);
+client_s *incoming_connection(int, struct sockaddr_in *, /*int **/ client_s *);
+int print_usage(void);
 int parsing(int, char **);
 
 #endif // FTP_H_
