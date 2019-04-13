@@ -27,6 +27,8 @@ client_s *create_node(int port)
 
         new->port = port;
         new->data = 0;
+        new->username = false;
+        new->passw = false;
         new->next = NULL;
         return (new);
 }

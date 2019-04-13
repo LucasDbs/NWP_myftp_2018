@@ -39,9 +39,9 @@ client_s *manage_client(client_s *head, client_s *client, struct sockaddr_in *ad
 
 	if ((retval = read(client->port, str, 1024)) == 0) {
 		getpeername(client->port, (struct sockaddr *)addr,
-			    (socklen_t *)&addrlen);
+			(socklen_t *)&addrlen);
 		printf("Host disconnected, ip %s, port %d \n",
-		       inet_ntoa(addr->sin_addr), ntohs(addr->sin_port));
+		       	inet_ntoa(addr->sin_addr), ntohs(addr->sin_port));
 		close(client->port);
 		delete_node(&head, client);
 	} else {
@@ -52,19 +52,21 @@ client_s *manage_client(client_s *head, client_s *client, struct sockaddr_in *ad
 	return (head);
 }
 
-client_s *check_client(fd_set *rfds, struct sockaddr_in *addr, /*int *clients*/ client_s *head)
+client_s *check_client(fd_set *rfds, struct sockaddr_in *addr, client_s *head)
 {
 	client_s *tmp = head;
 
 	while (tmp) {
-		if (FD_ISSET(tmp->port, rfds))
+		if (FD_ISSET(tmp->port, rfds)) {
 			head = manage_client(head, tmp, addr);
+			return (head);
+		}
 		tmp = tmp->next;
 	}
 	return (head);
 }
 
-client_s *incoming_connection(int sock, struct sockaddr_in *addr, /*int *clients*/ client_s *head)
+client_s *incoming_connection(int sock, struct sockaddr_in *addr, client_s *head)
 {
 	int new_socket = 0;
 	int addrlen = sizeof(*addr);
@@ -73,10 +75,7 @@ client_s *incoming_connection(int sock, struct sockaddr_in *addr, /*int *clients
 		perror("accept failed");
 		return (NULL);
 	}
-	if (write(new_socket, "220", 3) != 3) {
-		perror("send failed");
-		return (NULL);
-	}
+	write(new_socket, "220", 3);
 	if (!head)
 		head = create_node(new_socket);
 	else
