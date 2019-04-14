@@ -46,7 +46,6 @@ client_s *manage_client(client_s *head, client_s *client, struct sockaddr_in *ad
 		delete_node(&head, client);
 	} else {
 		str[retval] = '\0';
-		// clean_str(str);
 		check_command(str, client);
 	}
 	return (head);
@@ -71,11 +70,12 @@ client_s *incoming_connection(int sock, struct sockaddr_in *addr, client_s *head
 	int new_socket = 0;
 	int addrlen = sizeof(*addr);
 
-	if ((new_socket = accept(sock, (struct sockaddr *)addr, (socklen_t *) & addrlen)) < 0) {
+	if ((new_socket = accept(sock, (struct sockaddr *)addr,
+        (socklen_t *)&addrlen)) < 0) {
 		perror("accept failed");
-		return (NULL);
+		return (head);
 	}
-	write(new_socket, "220", 3);
+	write(new_socket, "220\n", 5);
 	if (!head)
 		head = create_node(new_socket);
 	else

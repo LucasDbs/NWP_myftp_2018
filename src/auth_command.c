@@ -13,70 +13,70 @@
 
 int user_command(client_s *client, char *str)
 {
-        if (strcmp(str, "Anonymous") == 0) {
-                client->username = true;
-                write(client->port, "331 User name okay, need password.", 40);
-        } else
-                write(client->port, "500 Error username", 19);
-        return (0);
+    if (strcmp(str, "Anonymous") == 0) {
+        client->username = true;
+        write(client->port, "331 User name okay, need password.\n", 36);
+    } else
+        write(client->port, "500 Error username.\n", 21);
+    return (0);
 }
 
 int passw_command(client_s *client, char *str)
 {
-        if (strcmp(str, "") == 0) {
-                client->passw = true;
-                write(client->port, "230 User logged in, proceed.", 29);
-        } else 
-                write(client->port, "500 Error password", 19);
-        return (0);
+    if (strcmp(str, "") == 0) {
+        client->passw = true;
+        write(client->port, "230 User logged in, proceed.\n", 30);
+    } else 
+        write(client->port, "500 Error password.\n", 21);
+    return (0);
 }
 
 char *arg_command(char *src)
 {
-        char *dest = malloc(sizeof(char) * (strlen(src) + 1));
-        int i = 0;
-        int a = 0;
+    char *dest = malloc(sizeof(char) * (strlen(src) + 1));
+    int i = 0;
+    int a = 0;
 
-        while (src[i] != ' ' && src[i])
-                i++;
-        if (src[i] == ' ')
-                i++;
-        while (src[i])
-                dest[a++] = src[i++];
-        dest[i] = '\0';
-        return (dest);
+    while (src[i] != ' ' && src[i])
+        i++;
+    if (src[i] == ' ')
+        i++;
+    while (src[i])
+        dest[a++] = src[i++];
+    dest[i] = '\0';
+    return (dest);
 }
 
 char *get_command(char *src)
 {
-        char *dest = malloc(sizeof(char) * (strlen(src) + 1));
-        int i = 0;
+    char *dest = malloc(sizeof(char) * (strlen(src) + 1));
+    int i = 0;
 
-        if (!src || !dest)
-                return (NULL);
-        while (src[i] != ' ' && src[i]) {
-                dest[i] = src[i];
-                i++;
-        }
-        dest[i] = '\0';
-        return (dest);
+    if (!src || !dest)
+        return (NULL);
+    while (src[i] != ' ' && src[i]) {
+        dest[i] = src[i];
+        i++;
+    }
+    dest[i] = '\0';
+    return (dest);
 }
 
 int check_command(char *str, client_s *client)
 {
-        char *res = get_command(str);
+    char *res = get_command(str);
 
-        if (!res) {
-                write(client->port, "500 Command not found.", 23);
-                return (0);
-        }
-        if (strcmp(res, "USER") == 0) {
-                user_command(client, arg_command(str));
-        }
-        else if (strcmp(res, "PASS") == 0)
-                passw_command(client, arg_command(str));
-        else
-                other_command(res, client);
-        free(res);
+    if (!res) {
+        write(client->port, "500 Command not found.\n", 24);
         return (0);
+    }
+    if (strcmp(res, "USER") == 0) {
+        user_command(client, arg_command(str));
+    }
+    else if (strcmp(res, "PASS") == 0)
+        passw_command(client, arg_command(str));
+    else
+        other_command(res, client);
+    free(res);
+    return (0);
 }

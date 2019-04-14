@@ -54,10 +54,9 @@ int launch_server(int port)
 	while (1) {
 		if (manage_select(&rfds, master_sock, list) < 0)
 			return (84);
-		if (FD_ISSET(master_sock, &rfds)) {
-			if ((list = incoming_connection(master_sock, &addr, list)) == NULL)
-				return (84);
-		} else
+		if (FD_ISSET(master_sock, &rfds))
+			list = incoming_connection(master_sock, &addr, list);
+		else
 			list = check_client(&rfds, &addr, list);
 	}
 	close(master_sock);
