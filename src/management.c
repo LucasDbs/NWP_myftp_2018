@@ -31,7 +31,8 @@ int manage_select(fd_set *rfds, int sock, client_s *head)
 	return (0);
 }
 
-client_s *manage_client(client_s *head, client_s *client, struct sockaddr_in *addr)
+client_s *manage_client(client_s *head, client_s *client,
+struct sockaddr_in *addr)
 {
 	int retval = 0;
 	char str[1024] = { 0 };
@@ -65,7 +66,8 @@ client_s *check_client(fd_set *rfds, struct sockaddr_in *addr, client_s *head)
 	return (head);
 }
 
-client_s *incoming_connection(int sock, struct sockaddr_in *addr, client_s *head)
+client_s *incoming_connection(int sock,
+struct sockaddr_in *addr, client_s *head)
 {
 	int new_socket = 0;
 	int addrlen = sizeof(*addr);
