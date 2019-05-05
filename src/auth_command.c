@@ -13,11 +13,12 @@
 
 int user_command(client_s *client, char *str)
 {
-    if (strcmp(str, "Anonymous") == 0) {
+    if (strcmp(str, "Anonymous\n") == 0) {
+        printf("passe\n");
         client->username = true;
-        write(client->port, "331 User name okay, need password.\n", 36);
+        write(client->port, "331\n", 5);
     } else
-        write(client->port, "500 Error username.\n", 21);
+        write(client->port, "500\n", 5);
     return (0);
 }
 
@@ -25,9 +26,9 @@ int passw_command(client_s *client, char *str)
 {
     if (strcmp(str, "") == 0) {
         client->passw = true;
-        write(client->port, "230 User logged in, proceed.\n", 30);
+        write(client->port, "230\n", 5);
     } else 
-        write(client->port, "500 Error password.\n", 21);
+        write(client->port, "500\n", 5);
     return (0);
 }
 
@@ -70,9 +71,8 @@ int check_command(char *str, client_s *client)
         write(client->port, "500 Command not found.\n", 24);
         return (0);
     }
-    if (strcmp(res, "USER") == 0) {
+    if (strcmp(res, "USER") == 0)
         user_command(client, arg_command(str));
-    }
     else if (strcmp(res, "PASS") == 0)
         passw_command(client, arg_command(str));
     else

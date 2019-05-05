@@ -42,7 +42,7 @@ struct sockaddr_in *addr)
 		getpeername(client->port, (struct sockaddr *)addr,
 			(socklen_t *)&addrlen);
 		printf("Host disconnected, ip %s, port %d \n",
-		       	inet_ntoa(addr->sin_addr), ntohs(addr->sin_port));
+		    inet_ntoa(addr->sin_addr), ntohs(addr->sin_port));
 		close(client->port);
 		delete_node(&head, client);
 	} else {
