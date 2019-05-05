@@ -77,7 +77,7 @@ struct sockaddr_in *addr, client_s *head)
 		perror("accept failed");
 		return (head);
 	}
-	write(new_socket, "220\n", 5);
+	write(new_socket, "220\n", 4);
 	if (!head)
 		head = create_node(new_socket);
 	else
