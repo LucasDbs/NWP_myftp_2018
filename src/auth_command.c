@@ -13,12 +13,11 @@
 
 int user_command(client_s *client, char *str)
 {
-    if (strcmp(str, "Anonymous\n") == 0) {
-        printf("passe\n");
+    if (strcmp(str, "Anonymous") == 0) {
         client->username = true;
-        write(client->port, "331\n", 5);
+        write(client->port, "331\n", 4);
     } else
-        write(client->port, "500\n", 5);
+        write(client->port, "500\n", 4);
     return (0);
 }
 
@@ -26,9 +25,9 @@ int passw_command(client_s *client, char *str)
 {
     if (strcmp(str, "") == 0) {
         client->passw = true;
-        write(client->port, "230\n", 5);
+        write(client->port, "230\n", 4);
     } else 
-        write(client->port, "500\n", 5);
+        write(client->port, "500\n", 4);
     return (0);
 }
 
