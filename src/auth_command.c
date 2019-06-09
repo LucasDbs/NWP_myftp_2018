@@ -13,7 +13,7 @@
 
 int user_command(client_s *client, char *str)
 {
-    if (strcmp(str, "Anonymous") == 0) {
+    if (strcmp(str, "Anonymous\r\n") == 0) {
         client->username = true;
         write(client->port, "331\n", 4);
     } else
@@ -23,10 +23,10 @@ int user_command(client_s *client, char *str)
 
 int passw_command(client_s *client, char *str)
 {
-    if (strcmp(str, "") == 0) {
+    if (strcmp(str, "\r\n") == 0) {
         client->passw = true;
         write(client->port, "230\n", 4);
-    } else 
+    } else
         write(client->port, "500\n", 4);
     return (0);
 }
@@ -67,7 +67,7 @@ int check_command(char *str, client_s *client)
     char *res = get_command(str);
 
     if (!res) {
-        write(client->port, "500 Command not found.\n", 24);
+        write(client->port, "530\n", 4);
         return (0);
     }
     if (strcmp(res, "USER") == 0)

@@ -15,7 +15,7 @@ int other_command(char *command, client_s *client)
     if (client->username == true && client->passw == true)
         return (0);
     else {
-        write(client->port, "500 Client not logged\n", 23);
+        write(client->port, "530\n", 4);
         return (84);
     }
 }
